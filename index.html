@@ -23,6 +23,7 @@
       <img id="example1" src="./trump.gif" width="360" height="360" rel:auto_play="1" />
       <br>
       <button id='button'>BUTTON</button>
+      <button id='download'>Download</button>
 
       <script type="text/javascript">
         var sup1 = new SuperGif({
@@ -70,12 +71,20 @@
   var binary_gif = encoder.stream().getData() //notice this is different from the as3gif package!
   var data_url = 'data:image/gif;base64,'+encode64(binary_gif);
   console.log(data_url);
-  // download(data_url, FILE_NAME, 'image/gif');
 
 
+  /**
+   * Download button click handler
+   */
+  document.getElementById('download').onclick = function() {
+    console.log('download');
+    downloadGIF();
+  }
 
-
-
+  // Downloads the GIF
+  function downloadGIF() {
+    download(data_url, FILE_NAME, 'image/gif');
+  }
 </script>
 
 

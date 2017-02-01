@@ -30,11 +30,11 @@
   <section class='canvases'>
     <!-- These dimensions are hard-coded -->
     <h1>Draw</h1>
-    <canvas id='drawing' width="360" height="282"></canvas>
+    <canvas id='drawing' width="600" height="521"></canvas>
     <h1>Result</h1>
-    <canvas id='result' width="360" height="282"></canvas>
+    <canvas id='result' width="600" height="521"></canvas>
     <h1>Trump</h1>
-    <img id="example1" src="./trump.gif" width="360" height="282" rel:auto_play="1" />
+    <img id="example1" src="./trump.gif" width="600" height="521" rel:auto_play="1" />
     <hr />
     <button id='button'>BUTTON</button>
     <button id='download'>Download</button>
@@ -42,6 +42,68 @@
 </div>
 
 <script>
+  var WIDTH = 600;
+  var HEIGHT = 521;
+  var FRAME_COUNT = 87; // Hardcoded
+  /**
+   * pageCorners: This contains an array from [0..FRAME_COUNT) of the pages
+   * - leftPage, rightPage: left and right pages (from observer's perspective)
+   *   - [x1, y1, x2, y2, x3, y3, x4, y4] - tl, tr, br, bl
+   */
+  var pageCorners = [
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+    { leftPage: [0,0,10,10, 0,0,10,10], rightPage: [0,0,0,0, 0,0,0,0] },
+  ];
 
   // Control the GIF
   var sup1 = new SuperGif({
@@ -50,23 +112,41 @@
   });
   sup1.load(function() {
     console.log('loaded');
+
+
+
+
+    sup1.pause()
+    sup1.move_to(0);
   });
   // sup1.pause()
-  // sup1.move_to(4);
+  // sup1.move_to(0);
   var i = 0;
   document.getElementById('button').onclick = function() {
-    // sup1.move_to(i);
+    sup1.move_to(i);
+    console.log('frame', i);
     // sup1.pause()
 
 
     //grab the context from your destination canvas
     var destCtx = result.getContext('2d');
     destCtx.drawImage(sup1.get_canvas(), 0, 0);
+    destCtx.beginPath();
+    destCtx.moveTo(20,20);
+    destCtx.lineTo(20,100);
+    destCtx.lineTo(70,100);
+    destCtx.closePath();
+
+
+    destCtx.strokeStyle = 'red';
+    destCtx.strokeWidth = '4px';
+    // destCtx.fill();
+    destCtx.stroke();
 
     // var result = sup1.get_canvas();
     // console.log(result);
     i += 1;
-    i = i % 20;
+    i = i % FRAME_COUNT;
   }
 
 
@@ -106,7 +186,7 @@
 
   // Downloads the GIF
   function downloadGIF() {
-    var FILE_NAME = 'dlDataUrlBin.gif';
+    var FILE_NAME = 'trump-draws.gif';
     var binary_gif = encoder.stream().getData() //notice this is different from the as3gif package!
     var data_url = 'data:image/gif;base64,'+encode64(binary_gif);
     download(data_url, FILE_NAME, 'image/gif');

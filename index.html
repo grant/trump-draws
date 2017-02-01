@@ -6,48 +6,60 @@
 </head>
 <body>
 
-
-
-
-
-
-
-
+<!-- Scripts -->
 <script src='libgif.js'></script>
 <script src='gif.js'></script>
 <script src='download.js'></script>
-<canvas id='bitmap'></canvas>
+<!-- Dev -->
+<script src='live_reload.js'></script>
 
+<link rel="stylesheet" type="text/css" href="reset.css">
+<style>
+  body {
+    font-family: Helvetica;
+  }
+  h1 {
+    font-size: 20px;
+  }
+  canvas {
+    vertical-align: top;
+  }
+</style>
 
-
-      <img id="example1" src="./trump.gif" width="360" height="360" rel:auto_play="1" />
-      <br>
-      <button id='button'>BUTTON</button>
-      <button id='download'>Download</button>
-
-      <script type="text/javascript">
-        var sup1 = new SuperGif({
-          gif: document.getElementById('example1'),
-          progressbar_height: 0,
-        });
-        sup1.load(function() {
-          console.log('loaded');
-        });
-        // sup1.pause()
-        // sup1.move_to(4);
-        var i = 0;
-        document.getElementById('button').onclick = function() {
-          sup1.move_to(i);
-          sup1.pause()
-          i += 1;
-        }
-      </script>
-
+<div>
+  <section class='canvases'>
+    <!-- These dimensions are hard-coded -->
+    <h1>Draw</h1>
+    <canvas id='bitmap' width="360" height="282"></canvas>
+    <img id="example1" src="./trump.gif" width="360" height="282" rel:auto_play="1" />
+    <h1>Trump</h1>
+    <hr />
+    <button id='button'>BUTTON</button>
+    <button id='download'>Download</button>
+  </section>
+</div>
 
 <script>
 
-  var FILE_NAME = 'dlDataUrlBin.gif';
+  // Control the GIF
+  var sup1 = new SuperGif({
+    gif: document.getElementById('example1'),
+    progressbar_height: 0,
+  });
+  sup1.load(function() {
+    console.log('loaded');
+  });
+  // sup1.pause()
+  // sup1.move_to(4);
+  var i = 0;
+  document.getElementById('button').onclick = function() {
+    sup1.move_to(i);
+    sup1.pause()
+    i += 1;
+  }
 
+
+  // Draw the GIF
   var canvas = document.getElementById('bitmap');
   var context = canvas.getContext('2d');
   context.fillStyle = 'rgb(255,255,255)';
@@ -65,13 +77,13 @@
                         //1+ -> loop n times then stop
   encoder.setDelay(100); //go to next frame every n milliseconds
   encoder.start();
+
+  // Change the canvas, then addFrame
   encoder.addFrame(context);
+  context.fillRect (0, 0, 75, 50);   //draw a little red box
+  encoder.addFrame(context);
+
   encoder.finish();
-
-  var binary_gif = encoder.stream().getData() //notice this is different from the as3gif package!
-  var data_url = 'data:image/gif;base64,'+encode64(binary_gif);
-  console.log(data_url);
-
 
   /**
    * Download button click handler
@@ -83,6 +95,9 @@
 
   // Downloads the GIF
   function downloadGIF() {
+    var FILE_NAME = 'dlDataUrlBin.gif';
+    var binary_gif = encoder.stream().getData() //notice this is different from the as3gif package!
+    var data_url = 'data:image/gif;base64,'+encode64(binary_gif);
     download(data_url, FILE_NAME, 'image/gif');
   }
 </script>

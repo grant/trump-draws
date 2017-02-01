@@ -1,6 +1,6 @@
 // Play a GIF on canvas
 //
-// From: https://github.com/antimatter15/jsgif
+// API: https://github.com/antimatter15/jsgif
 //
 // Combined files:
 // <script type="text/javascript" src="LZWEncoder.js"></script>

@@ -132,6 +132,12 @@
     var destCtx = result.getContext('2d');
     destCtx.drawImage(sup1.get_canvas(), 0, 0);
     destCtx.beginPath();
+    var x = 100;
+    var y = 100;
+    var w = 10;
+    var h = 30;
+    // destCtx.rect(x, y, w, h);
+    destCtx.beginPath();
     destCtx.moveTo(20,20);
     destCtx.lineTo(20,100);
     destCtx.lineTo(70,100);

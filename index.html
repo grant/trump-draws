@@ -166,11 +166,17 @@
   });
   // sup1.pause()
   // sup1.move_to(0);
+
+  var coord = []; //temp
   var i = 0;
   function next() {
     sup1.move_to(i);
     console.log('frame', i);
     // sup1.pause()
+
+
+    console.log(coord);
+    coord = [];
 
 
     //grab the context from your destination canvas
@@ -221,7 +227,7 @@
   window.onkeypress = next;
 
   window.onclick = function(e) {
-    console.log(e.clientX, e.clientY);
+    coord.push(e.clientX, e.clientY);
   }
 
 

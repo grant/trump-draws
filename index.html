@@ -30,9 +30,11 @@
   <section class='canvases'>
     <!-- These dimensions are hard-coded -->
     <h1>Draw</h1>
-    <canvas id='bitmap' width="360" height="282"></canvas>
-    <img id="example1" src="./trump.gif" width="360" height="282" rel:auto_play="1" />
+    <canvas id='drawing' width="360" height="282"></canvas>
+    <h1>Result</h1>
+    <canvas id='result' width="360" height="282"></canvas>
     <h1>Trump</h1>
+    <img id="example1" src="./trump.gif" width="360" height="282" rel:auto_play="1" />
     <hr />
     <button id='button'>BUTTON</button>
     <button id='download'>Download</button>
@@ -53,29 +55,29 @@
   // sup1.move_to(4);
   var i = 0;
   document.getElementById('button').onclick = function() {
-    sup1.move_to(i);
-    sup1.pause()
+    // sup1.move_to(i);
+    // sup1.pause()
 
 
     //grab the context from your destination canvas
-    var destCtx = canvas.getContext('2d');
+    var destCtx = result.getContext('2d');
     destCtx.drawImage(sup1.get_canvas(), 0, 0);
 
-    // var canvas = sup1.get_canvas();
-    // console.log(canvas);
+    // var result = sup1.get_canvas();
+    // console.log(result);
     i += 1;
     i = i % 20;
   }
 
 
   // Draw the GIF
-  var canvas = document.getElementById('bitmap');
-  var context = canvas.getContext('2d'); // starts all black
+  var drawing = document.getElementById('drawing');
+  var context = drawing.getContext('2d'); // starts all black
   // context.fillStyle = 'rgb(255,255,255)';
-  // context.fillRect(0,0,canvas.width, canvas.height); //GIF can't do transparent so do white
+  // context.fillRect(0,0,drawing.width, drawing.height); //GIF can't do transparent so do white
 
   context.fillStyle = 'rgb(255,255,0)';
-  context.fillRect(10,10,canvas.width/2, canvas.height/2); //GIF can't do transparent so do white
+  context.fillRect(10,10,drawing.width/2, drawing.height/2); //GIF can't do transparent so do white
 
   // context.fillStyle = 'rgb(200,0,0)';
   // context.fillRect (10, 10, 75, 50);   //draw a little red box

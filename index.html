@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <title>Trump Draws</title>
+</head>
+<body>
+
+
+
+
+
+
+
+
+<script src='libgif.js'></script>
+<script src='gif.js'></script>
+<script src='download.js'></script>
+<canvas id='bitmap'></canvas>
+
+
+
+      <img id="example1" src="./trump.gif" width="360" height="360" rel:auto_play="1" />
+      <br>
+      <button id='button'>BUTTON</button>
+
+      <script type="text/javascript">
+        var sup1 = new SuperGif({
+          gif: document.getElementById('example1'),
+          progressbar_height: 0,
+        });
+        sup1.load(function() {
+          console.log('loaded');
+        });
+        // sup1.pause()
+        // sup1.move_to(4);
+        var i = 0;
+        document.getElementById('button').onclick = function() {
+          sup1.move_to(i);
+          sup1.pause()
+          i += 1;
+        }
+      </script>
+
+
+<script>
+
+  var FILE_NAME = 'dlDataUrlBin.gif';
+
+  var canvas = document.getElementById('bitmap');
+  var context = canvas.getContext('2d');
+  context.fillStyle = 'rgb(255,255,255)';
+  context.fillRect(0,0,canvas.width, canvas.height); //GIF can't do transparent so do white
+
+  context.fillStyle = 'rgb(255,255,0)';
+  context.fillRect(0,0,canvas.width/2, canvas.height); //GIF can't do transparent so do white
+
+  context.fillStyle = 'rgb(200,0,0)';
+  context.fillRect (10, 10, 75, 50);   //draw a little red box
+
+  // encoder/downloader
+  var encoder = new GIFEncoder();
+  encoder.setRepeat(0); //0  -> loop forever
+                        //1+ -> loop n times then stop
+  encoder.setDelay(100); //go to next frame every n milliseconds
+  encoder.start();
+  encoder.addFrame(context);
+  encoder.finish();
+
+  var binary_gif = encoder.stream().getData() //notice this is different from the as3gif package!
+  var data_url = 'data:image/gif;base64,'+encode64(binary_gif);
+  console.log(data_url);
+  // download(data_url, FILE_NAME, 'image/gif');
+
+
+
+
+
+</script>
+
+
+
+
+</body>
+</html>

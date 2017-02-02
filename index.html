@@ -68,6 +68,9 @@
       var mouseY = e.pageY - this.offsetTop;
       console.log(side + ' draw start' + mouseX + ',' + mouseY);
 
+      contextLeft.beginPath();
+      contextLeft.moveTo(mouseX, mouseY);
+
       paint = true;
       // addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
       // redraw();
@@ -82,6 +85,9 @@
       if (drawing) {
         var mouseX = e.pageX - this.offsetLeft;
         var mouseY = e.pageY - this.offsetTop;
+
+        contextLeft.lineTo(mouseX, mouseY);
+        contextLeft.stroke();
         console.log(side + ' draw move' + mouseX + ',' + mouseY);
       }
     }

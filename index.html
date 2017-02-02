@@ -16,7 +16,7 @@
 <link rel="stylesheet" type="text/css" href="reset.css">
 <style>
   body {
-    font-family: Helvetica;
+    font-family: "Comic Sans MS"; /* troll */
   }
   h1 {
     font-size: 40px;
@@ -28,8 +28,24 @@
   }
   canvas {
     vertical-align: top;
-    cursor: crosshair;
     user-select: none;
+  }
+  canvas.drawing {
+    cursor: crosshair;
+  }
+  .color {
+    width: 20px;
+    height: 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    display: inline-block;
+  }
+  .color:hover {
+    opacity: 0.8;
+  }
+  .color.selected {
+    border: 1px solid #666;
   }
   .drawing {
     background: rgb(196, 216, 206);
@@ -70,7 +86,8 @@
   <section class='draw'>
     <ul class="buttons">
       <li><button id='draw-btn'>Draw!</button></li>
-      <li><button id='download-btn' class='hidden'>Download!</button></li>
+      <li><button id='download-btn'>Download!</button></li>
+      <ul class='colors'></ul>
     </ul>
     <h2><ul class='labels'>
       <li>Left Page</li>
@@ -86,6 +103,41 @@
   // http://www.williammalone.com/articles/create-html5-canvas-javascript-drawing-app
   contextLeft = document.getElementById('drawing-left').getContext('2d');
   contextRight = document.getElementById('drawing-right').getContext('2d');
+  
+  var settings = {
+    // https://www.materialpalette.com/
+    colors: [
+      '#ef3430', // red
+      '#e3005b', // pink
+      '#5e28b0', // purple
+      '#228bf0', // blue
+      '#48ac48', // green
+      '#fdec35', // yellow
+      '#fb4a1e', // orange
+      '#6f4d40', // brown
+      '#1b1b1b', // black
+    ],
+    lineWidth: 3,
+  };
+  var colorSelectedIndex = 0;
+
+  // Add the colors to the page
+  var colorsList = document.getElementsByClassName('colors')[0];
+  for (var i = 0; i < settings.colors.length; ++i) {
+    var color = settings.colors[i];
+    var colorCircle = document.createElement('div')
+    colorCircle.className = 'color';
+    colorCircle.style.backgroundColor = color;
+    colorsList.appendChild(colorCircle);
+  }
+
+  contextLeft.lineWidth = settings.lineWidth;
+  contextRight.lineWidth = settings.lineWidth;
+  var brushColor = settings.colors[colorSelectedIndex];
+  contextLeft.strokeStyle = brushColor;
+  contextRight.strokeStyle = brushColor;
+  contextLeft.contextLeft='round';
+  contextRight.contextLeft='round';
 
   /**
    * Handles drawing

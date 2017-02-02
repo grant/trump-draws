@@ -33,6 +33,12 @@
   canvas.drawing {
     cursor: crosshair;
   }
+  button {
+    cursor: pointer;
+  }
+  .buttons {
+    margin: 10px;
+  }
   .color {
     width: 20px;
     height: 20px;
@@ -57,7 +63,6 @@
     height: 521px; /* Hacky */
   }
   section.draw {
-    margin-top: 20px;
     text-align: center;
   }
   .trump-canvas, .jsgif {
@@ -77,6 +82,10 @@
   button {
     font-family: inherit;
   }
+  footer {
+    text-align: center;
+    margin: 10px 0;
+  }
 </style>
 
 <div>
@@ -89,7 +98,6 @@
   </section>
   <section class='draw'>
     <ul class="buttons">
-      <li><button id='draw-btn'>Draw!</button></li>
       <li><button id='download-btn'>Download!</button></li>
       <ul class='colors' id='colors'></ul>
     </ul>
@@ -100,6 +108,7 @@
     <canvas class='drawing' id='drawing-left' width="360" height="480"></canvas>
     <canvas class='drawing' id='drawing-right' width="360" height="480"></canvas>
   </section>
+  <footer>#trumpdraws</footer>
 </div>
 
 <script>
@@ -121,7 +130,7 @@
       '#6f4d40', // brown
       '#1b1b1b', // black
     ],
-    lineWidth: 3,
+    lineWidth: 5,
   };
   var colorSelectedIndex = 0;
 

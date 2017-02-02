@@ -39,13 +39,14 @@
     margin: 0 10px;
     cursor: pointer;
     border-radius: 5px;
+    border: 2px solid #fff;
     display: inline-block;
   }
   .color:hover {
     opacity: 0.8;
   }
   .color.selected {
-    border: 1px solid #666;
+    border: 2px solid #fffc48;
   }
   .drawing {
     background: rgb(196, 216, 206);
@@ -73,6 +74,9 @@
     text-align: center;
     color: #ddd;
   }
+  button {
+    font-family: inherit;
+  }
 </style>
 
 <div>
@@ -87,7 +91,7 @@
     <ul class="buttons">
       <li><button id='draw-btn'>Draw!</button></li>
       <li><button id='download-btn'>Download!</button></li>
-      <ul class='colors'></ul>
+      <ul class='colors' id='colors'></ul>
     </ul>
     <h2><ul class='labels'>
       <li>Left Page</li>
@@ -127,15 +131,23 @@
     var color = settings.colors[i];
     var colorCircle = document.createElement('div')
     colorCircle.className = 'color';
+    colorCircle.dataset.color = color;
     colorCircle.style.backgroundColor = color;
     colorsList.appendChild(colorCircle);
   }
 
   contextLeft.lineWidth = settings.lineWidth;
   contextRight.lineWidth = settings.lineWidth;
+  function setBrushColor(side, brushColor) {
+    if (side === 'left') {
+      contextLeft.strokeStyle = brushColor;
+    } else {
+      contextRight.strokeStyle = brushColor;
+    }
+  }
   var brushColor = settings.colors[colorSelectedIndex];
-  contextLeft.strokeStyle = brushColor;
-  contextRight.strokeStyle = brushColor;
+  setBrushColor('left', brushColor);
+  setBrushColor('right', brushColor);
   contextLeft.contextLeft='round';
   contextRight.contextLeft='round';
 
@@ -418,6 +430,23 @@
   document.getElementById('download-btn').onclick = function() {
     console.log('download');
     downloadGIF();
+  }
+
+  /**
+   * Color button click handler
+   */
+  document.getElementById('colors').onclick = function(e) {
+    var color = e.target.dataset.color;
+
+    // remove highlights
+    var selected = document.getElementsByClassName('selected');
+    while (selected.length) {
+      selected[0].className = selected[0].className.replace(/\bselected\b/g, '');
+    }
+
+    e.target.className = e.target.className + ' selected';
+    setBrushColor('left', color);
+    setBrushColor('right', color);
   }
 
   // Downloads the GIF

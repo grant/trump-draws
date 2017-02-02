@@ -19,6 +19,11 @@
     font-family: Helvetica;
   }
   h1 {
+    font-size: 40px;
+    text-align: center;
+    margin: 10px;
+  }
+  h2 {
     font-size: 20px;
   }
   canvas {
@@ -27,16 +32,17 @@
     user-select: none;
   }
   .drawing {
+    background: rgb(196, 216, 206);
     border: 1px solid gray;
   }
 </style>
 
 <div>
+  <h1>Trump Draws</h1>
   <section class='canvases'>
     <!-- These dimensions are hard-coded -->
-
     <canvas id='result' width="600" height="521"></canvas>
-    <h1>Trump</h1>
+    <h2>Trump</h2>
     <img id="example1" src="./trump.gif" width="600" height="521" rel:auto_play="1" />
     <hr />
     <button id='button'>BUTTON</button>
@@ -45,10 +51,10 @@
 
 
 
-    <h1>Draw</h1>
+    <h2>Draw</h2>
     <canvas class='drawing' id='drawing-left' width="360" height="480"></canvas>
     <canvas class='drawing' id='drawing-right' width="360" height="480"></canvas>
-    <h1>Result</h1>
+    <h2>Result</h2>
   </section>
 </div>
 
@@ -99,7 +105,6 @@
           contextRight.lineTo(mouseX, mouseY);
           contextRight.stroke();
         }
-        console.log(side + ' draw move' + mouseX + ',' + mouseY);
       }
     }
   }
@@ -232,14 +237,12 @@
   // Control the GIF
   var sup1 = new SuperGif({
     gif: document.getElementById('example1'),
-    progressbar_height: 0,
+    progressbar_height: 10,
+    progressbar_background_color: 'rgba(255,255,255,0.1)',
+    progressbar_foreground_color: 'rgba(255,0,22,.1)',
   });
   sup1.load(function() {
     console.log('loaded');
-
-
-
-
     sup1.pause()
     sup1.move_to(0);
   });

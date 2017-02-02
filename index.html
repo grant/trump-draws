@@ -33,7 +33,29 @@
   }
   .drawing {
     background: rgb(196, 216, 206);
-    border: 1px solid gray;
+    border: 1px solid #ccc;
+  }
+  section.canvases {
+    position: relative;
+    height: 521px; /* Hacky */
+  }
+  section.draw {
+    margin-top: 20px;
+    text-align: center;
+  }
+  .trump-canvas, .jsgif {
+    position: absolute;
+    left: calc(50% - 300px);
+  }
+  .hidden {
+    display: none;
+  }
+  .labels li {
+    display: inline-block;
+    width: 380px;
+    margin: 3px 0;
+    text-align: center;
+    color: #ddd;
   }
 </style>
 
@@ -41,20 +63,21 @@
   <h1>Trump Draws</h1>
   <section class='canvases'>
     <!-- These dimensions are hard-coded -->
-    <canvas id='result' width="600" height="521"></canvas>
-    <h2>Trump</h2>
-    <img id="example1" src="./trump.gif" width="600" height="521" rel:auto_play="1" />
-    <hr />
-    <button id='button'>BUTTON</button>
-    <button id='download'>Download</button>
-
-
-
-
-    <h2>Draw</h2>
+    <div class="trump-canvas"><canvas id='result' width="600" height="521"></canvas></div>
+    <!-- img will be wrapped in `jsgif` -->
+    <img class='trump-canvas' id="example1" src="./trump.gif" width="600" height="521" rel:auto_play="1" />
+  </section>
+  <section class='draw'>
+    <ul class="buttons">
+      <li><button id='draw-btn'>Draw!</button></li>
+      <li><button id='download-btn' class='hidden'>Download!</button></li>
+    </ul>
+    <h2><ul class='labels'>
+      <li>Left Page</li>
+      <li>Right Page</li>
+    </ul></h2>
     <canvas class='drawing' id='drawing-left' width="360" height="480"></canvas>
     <canvas class='drawing' id='drawing-right' width="360" height="480"></canvas>
-    <h2>Result</h2>
   </section>
 </div>
 
@@ -243,6 +266,9 @@
   });
   sup1.load(function() {
     console.log('loaded');
+    next();
+
+    document.getElementsByClassName('jsgif')[0].className += ' hidden'
     sup1.pause()
     sup1.move_to(0);
   });
@@ -270,7 +296,6 @@
     var y = 100;
     var w = 10;
     var h = 30;
-    // destCtx.rect(x, y, w, h);
     destCtx.beginPath();
     var leftPage = pageCorners[i];
     var rightPage = pageCorners[i].splice(8);
@@ -298,14 +323,12 @@
 
     destCtx.strokeStyle = 'red';
     destCtx.strokeWidth = '4px';
-    // destCtx.fill();
     destCtx.stroke();
     i += 1;
     i = i % FRAME_COUNT;
   }
-  document.getElementById('button').onclick = next;
-  window.onkeypress = next;
 
+  window.onkeypress = next; // debug
   window.onclick = function(e) {
     coord.push(e.clientX, e.clientY);
   }
@@ -340,7 +363,7 @@
   /**
    * Download button click handler
    */
-  document.getElementById('download').onclick = function() {
+  document.getElementById('download-btn').onclick = function() {
     console.log('download');
     downloadGIF();
   }

@@ -23,6 +23,7 @@
   }
   canvas {
     vertical-align: top;
+    cursor: crosshair;
   }
   .drawing {
     border: 1px solid gray;
@@ -57,22 +58,43 @@
   contextRight = document.getElementById('drawing-right').getContext('2d');
 
   /**
-   * Handles a
+   * Handles drawing
    */
-  function drawHandler(side) {
-    return function(e){
-      console.log(side + ' draw start');
+  var drawing = false;
+  function drawStart(side) {
+    return function(e) {
+      drawing = true;
       var mouseX = e.pageX - this.offsetLeft;
       var mouseY = e.pageY - this.offsetTop;
+      console.log(side + ' draw start' + mouseX + ',' + mouseY);
 
       paint = true;
       // addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
       // redraw();
     };
   }
+  function drawEnd(side) {
+    drawing = false;
+  }
+  function drawMove(side) {
+    return function(e) {
+      // Only draw when mouse is clicked.
+      if (drawing) {
+        var mouseX = e.pageX - this.offsetLeft;
+        var mouseY = e.pageY - this.offsetTop;
+        console.log(side + ' draw move' + mouseX + ',' + mouseY);
+      }
+    }
+  }
 
-  document.getElementById('drawing-left').onmousedown = drawHandler('left');
-  document.getElementById('drawing-right').onmousedown = drawHandler('right');
+  document.getElementById('drawing-left').onmousedown = drawStart('left');
+  document.getElementById('drawing-right').onmousedown = drawStart('right');
+  document.onmouseup = function() {
+    drawEnd('left');
+    drawEnd('right');
+  }
+  document.getElementById('drawing-left').onmousemove = drawMove('left');
+  document.getElementById('drawing-right').onmousemove = drawMove('right');
 
   var WIDTH = 600;
   var HEIGHT = 521;

@@ -24,6 +24,9 @@
   canvas {
     vertical-align: top;
   }
+  .drawing {
+    border: 1px solid gray;
+  }
 </style>
 
 <div>
@@ -41,12 +44,36 @@
 
 
     <h1>Draw</h1>
-    <canvas id='drawing' width="600" height="521"></canvas>
+    <canvas class='drawing' id='drawing-left' width="360" height="480"></canvas>
+    <canvas class='drawing' id='drawing-right' width="360" height="480"></canvas>
     <h1>Result</h1>
   </section>
 </div>
 
 <script>
+  // Drawing
+  // http://www.williammalone.com/articles/create-html5-canvas-javascript-drawing-app
+  contextLeft = document.getElementById('drawing-left').getContext('2d');
+  contextRight = document.getElementById('drawing-right').getContext('2d');
+
+  /**
+   * Handles a
+   */
+  function drawHandler(side) {
+    return function(e){
+      console.log(side + ' draw start');
+      var mouseX = e.pageX - this.offsetLeft;
+      var mouseY = e.pageY - this.offsetTop;
+
+      paint = true;
+      // addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+      // redraw();
+    };
+  }
+
+  document.getElementById('drawing-left').onmousedown = drawHandler('left');
+  document.getElementById('drawing-right').onmousedown = drawHandler('right');
+
   var WIDTH = 600;
   var HEIGHT = 521;
   var FRAME_COUNT = 87; // Hardcoded
@@ -60,7 +87,7 @@
     [555,493,399,517,292,441,432,423,385,520,226,564,123,468,279,444],
     [537,484,403,513,276,442,406,417,393,519,243,568,111,472,261,442],
     [508,459,417,502,243,447,342,408,405,508,285,570,111,495,232,448],
-    [454,438,403,489,199,450,267,403,397,492,301,599,109,513,196,451],
+    [458,438,403,489,199,450,267,403,397,492,301,599,109,513,196,451],
     [417,427,390,475,177,453,222,402,387,481,340,572,115,517,177,454],
     [376,408,382,460,168,451,184,400,382,466,384,529,142,522,168,457],
     [357,402,382,450,175,454,174,402,385,457,412,520,180,522,177,456],
@@ -241,30 +268,30 @@
 
 
   // Draw the GIF
-  var drawing = document.getElementById('drawing');
-  var context = drawing.getContext('2d'); // starts all black
+  // var drawing = document.getElementById('drawing');
+  // var context = drawing.getContext('2d'); // starts all black
   // context.fillStyle = 'rgb(255,255,255)';
   // context.fillRect(0,0,drawing.width, drawing.height); //GIF can't do transparent so do white
 
-  context.fillStyle = 'rgb(255,255,0)';
-  context.fillRect(10,10,drawing.width/2, drawing.height/2); //GIF can't do transparent so do white
+  // context.fillStyle = 'rgb(255,255,0)';
+  // context.fillRect(10,10,drawing.width/2, drawing.height/2); //GIF can't do transparent so do white
 
   // context.fillStyle = 'rgb(200,0,0)';
   // context.fillRect (10, 10, 75, 50);   //draw a little red box
 
   // encoder/downloader
-  var encoder = new GIFEncoder();
-  encoder.setRepeat(0); //0  -> loop forever
-                        //1+ -> loop n times then stop
-  encoder.setDelay(100); //go to next frame every n milliseconds
-  encoder.start();
+  // var encoder = new GIFEncoder();
+  // encoder.setRepeat(0); //0  -> loop forever
+  //                       //1+ -> loop n times then stop
+  // encoder.setDelay(100); //go to next frame every n milliseconds
+  // encoder.start();
 
-  // Change the canvas, then addFrame
-  // encoder.addFrame(destCtx);
-  // context.fillRect (0, 0, 75, 50);   //draw a little red box
-  encoder.addFrame(context);
+  // // Change the canvas, then addFrame
+  // // encoder.addFrame(destCtx);
+  // // context.fillRect (0, 0, 75, 50);   //draw a little red box
+  // encoder.addFrame(context);
 
-  encoder.finish();
+  // encoder.finish();
 
   /**
    * Download button click handler

@@ -96,6 +96,11 @@
   .dangle:hover {
     transform: rotate(30deg);
   }
+
+  /* Temp*/
+  .rect {
+    background: rgba(255, 0, 0, 0.3);
+  }
 </style>
 
 <div>
@@ -117,24 +122,45 @@
 
 
   <section class='canvases'>
+
+
+
+    <!-- TEMP -->
     <div class="getrots" style="
         position: absolute;
         width: 100%;
         z-index: 100;
     ">
-      <div style="color:red;width: 600px;height:521px;margin: 0 auto;">
-        <div style="transform-origin: 0% 0%;
-          height: 482px;
-          width: 362px;
-          background:rgba(255, 0, 0, 0.3);
-          transform:
-            rotateX(0deg)
-            rotateY(0deg)
-            rotateZ(10deg);">
-          Red
+      <div class="center" style='width: 600px;margin: 0 auto;position: relative;'>
+        <div style="top:0;left:0;color:red;opacity:0.9;width: 600px;height:521px;position: absolute;">
+          <div class='rect1' style="transform-origin: 0% 0%;
+            height: 482px;
+            width: 362px;
+            transform:
+              rotateX(0deg)
+              rotateY(0deg)
+              rotateZ(10deg);">
+            LEFT PAGE
+          </div>
+        </div>
+        <div style="top:0;left:0;color:blue;opacity:0.9;width: 600px;height:521px;position: absolute;">
+          <div class='rect2' style="transform-origin: 0% 0%;
+            height: 482px;
+            width: 362px;
+            transform:
+              rotateX(50deg)
+              rotateY(0deg)
+              rotateZ(10deg);">
+            RIGHT PAGE
+          </div>
         </div>
       </div>
     </div>
+
+
+
+
+
     <!-- These dimensions are hard-coded -->
     <div class="trump-canvas"><canvas id='result' width="600" height="521"></canvas></div>
     <!-- img will be wrapped in `jsgif` -->
@@ -374,6 +400,116 @@
     [0,0,10,10, 0,0,10,10, 0,0,0,0, 0,0,0,0]
   ];
 
+  /**
+   * pageRotations: This contains an array from [0..FRAME_COUNT) of the page 3d rotation
+   * - leftPage, rightPage: left and right pages (from observer's perspective)
+   *   - [p1rotX, p1rotY, p1rotZ, p2rotX, p2rotY, p2rotZ]
+   */
+  var pageRotations = [
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    // 10
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    // 20
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    // 30
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    // 40
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    // 50
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    // 60
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    // 70
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    // 80
+    [0,0,0,0,0,0],
+    // at this point, pages aren't visible
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+  ];
+
   // Control the GIF
   var sup1 = new SuperGif({
     gif: document.getElementById('example1'),
@@ -478,6 +614,14 @@ setTimeout(function() {
     destCtx.moveTo(rightPage[6] + xOffset, rightPage[7] + yOffset);
     destCtx.lineTo(rightPage[0] + xOffset, rightPage[1] + yOffset);
     destCtx.closePath();
+
+    // Move the rectangle
+    var rect1 = document.getElementsByClassName('rect1')[0];
+    rect1.style.width = '2000px';
+    rect1.style.transform = `translate(${leftPage[0]}px, ${leftPage[1]}px) rotateX(40deg) rotateY(20deg) rotateZ(110deg)`;
+    var rect2 = document.getElementsByClassName('rect2')[0];
+    rect2.style.width = '2000px';
+    rect2.style.transform = `translate(${rightPage[0]}px, ${rightPage[1]}px) rotateX(40deg) rotateY(20deg) rotateZ(110deg)`;
 
 
     // dest ctx temp!

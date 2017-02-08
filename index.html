@@ -420,11 +420,11 @@
    */
 
   var pageRotations = [
-    [79.5,-6,167,0,0,0,0.45,1,1,1],
-    [0,0,0,0,0,0,1,1,1,1],
-    [0,0,0,0,0,0,1,1,1,1],
-    [0,0,0,0,0,0,1,1,1,1],
-    [0,0,0,0,0,0,1,1,1,1],
+    [82,-6,167,77,-3,163.5,0.45,1,0.3,0.8],
+    [82,-9,166,0,0,0,0.45,1,1,1],
+    [82,-6,167,77,-3,163.5,0.45,1,0.3,0.8],
+    [82,-6,167,77,-3,163.5,0.45,1,0.3,0.8],
+    [82,-6,167,77,-3,163.5,0.45,1,0.3,0.8],
     [0,0,0,0,0,0,1,1,1,1],
     [0,0,0,0,0,0,1,1,1,1],
     [0,0,0,0,0,0,1,1,1,1],
@@ -638,8 +638,8 @@ setTimeout(function() {
     var pageScale = pageRotations[i].slice().splice(6); // array at 6th index
     var xOffset = -4;
     var yOffset = -7;
-    rect1.style.transform = `translate(${leftPage[0] + xOffset}px, ${leftPage[1] + yOffset}px) rotateX(${leftRot[0]}deg) rotateY(${leftRot[1]}deg) rotateZ(${leftRot[2]}deg) scaleX(${pageScale[0]}) scaleX(${pageScale[1]})`;
-    rect2.style.transform = `translate(${rightPage[0] + xOffset}px, ${rightPage[1] + yOffset}px) rotateX(${rightRot[0]}deg) rotateY(${rightRot[1]}deg) rotateZ(${rightRot[2]}deg) scaleX(${pageScale[2]}) scaleX(${pageScale[3]})`;
+    rect1.style.transform = `translate(${leftPage[0] + xOffset}px, ${leftPage[1] + yOffset}px) rotateX(${leftRot[0]}deg) rotateY(${leftRot[1]}deg) rotateZ(${leftRot[2]}deg) scaleX(${pageScale[0]}) scaleY(${pageScale[1]})`;
+    rect2.style.transform = `translate(${rightPage[0] + xOffset}px, ${rightPage[1] + yOffset}px) rotateX(${rightRot[0]}deg) rotateY(${rightRot[1]}deg) rotateZ(${rightRot[2]}deg) scaleX(${pageScale[2]}) scaleY(${pageScale[3]})`;
 
 
     // dest ctx temp!
